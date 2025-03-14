@@ -62,6 +62,8 @@ async function fetchItems(auth) {
   const fetchMax = parseInt(fetch_max, 10) || 100;
   const params = { "s": labelFilter, "r": "n", "n": fetchMax };
   const url = `${site}/api/greader.php/reader/api/0/stream/items/ids?output=json&${encodeParams(params)}`;
+
+  console.log("Fetching items");
   const resp = JSON.parse(await sendRequest(url, 'GET', null, authHeader));
 
   return resp;
@@ -73,6 +75,7 @@ async function fetchContent(auth, items) {
     .map((item) => `i=${item["id"]}`)
     .join("&");
 
+  console.log("Fetching content");
   const url = `${site}/api/greader.php/reader/api/0/stream/items/contents?output=json`;
   const resp = JSON.parse(await sendRequest(url, 'POST', itemIds, authHeader));
 
@@ -87,6 +90,8 @@ async function markAsRead(auth, items) {
 
   const params = { "a": "user/-/state/com.google/read" };
   const url = `${site}/api/greader.php/reader/api/0/edit-tag`;
+
+  console.log("Marking items as read");
   const resp = JSON.parse(await sendRequest(url, 'POST', `${itemIds}&${encodeParams(params)}`, authHeader));
 
   return resp;
@@ -101,8 +106,9 @@ async function loadAsync() {
   const items = await fetchItems(auth);
   const contents = await fetchContent(auth, items);
 
-  markAsRead(auth, items);
-  console.log(contents);
+  if (mark_read === "on") {
+    markAsRead(auth, items);
+  }
 
   return contents["items"]
     .map((content) => {
