@@ -1,0 +1,7 @@
+{
+  "id": "th.in.grid.freshrss",
+  "display_name": "FreshRSS",
+  "default_color": "blue",
+  "needs_verification": true,
+  "verify_variables": true
+}

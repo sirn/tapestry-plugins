@@ -1,0 +1,28 @@
+{
+  "inputs": [
+    {
+      "name": "username",
+      "prompt": "Username"
+    },
+    {
+      "name": "api_password",
+      "prompt": "API password"
+    },
+    {
+      "name": "label_filter",
+      "prompt": "Label filter",
+      "value": "-"
+    },
+    {
+      "name": "fetch_max",
+      "prompt": "Max fetch",
+      "value": "100"
+    },
+    {
+      "name": "mark_read",
+      "prompt": "Mark as read",
+      "type": "switch",
+      "value": "off"
+    }
+  ]
+}
