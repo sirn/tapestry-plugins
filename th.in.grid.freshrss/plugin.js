@@ -123,6 +123,17 @@ async function loadAsync() {
       identity.uri = content["origin"]["htmlUrl"];
       item.author = identity;
 
+      if (label_filter === "" || label_filter === "-") {
+        item.annotations = content["categories"]
+          .reduce((arr, key) => {
+            if (key.startsWith("user/-/label/")) {
+              const annotation = Annotation.createWithText(key.slice(13));
+              return [...arr, annotation];
+            }
+            return arr;
+          }, []);
+      }
+
       return item;
     });
 }
